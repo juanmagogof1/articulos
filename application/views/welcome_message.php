@@ -19,7 +19,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 <!-- Latest compiled JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-	
+
+<!--Axios para peticiones GET y POST -->	
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
 </head>
 <body>
 
@@ -56,13 +59,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		    <div class="input-group-prepend">
 		      <span class="input-group-text">Artículo</span>
 		    </div>
-		    <select class="form-control" id="artVta">
-		    	<option value="0">Seleccione Artículo</option>
-		    	<?php foreach ($articulos as $articulo) { ?>
-		    		<option value="<?php echo $articulo['eIdProducto']; ?>"><label>Artículo: </label><?php echo $articulo['txtNomProd']; ?>
-		    	 | P/U: <?php echo $articulo['ePrecioVenta']; ?></option>
-		    	<?php } ?>
-		    </select>
+		    <select class="form-control" id="artVta"></select>
 		</div>
 		<div class="input-group mb-3">
 		    <div class="input-group-prepend">
@@ -74,6 +71,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		
 		<button class="btn btn-outline-success waves-effect" onclick="addRow()">Agregar Artículo</button>
 		<button class="btn btn-outline-danger waves-effect" >Comprar Carrito</button>
+		<button class="btn btn-outline-info waves-effect" onclick="fillArticles();">Rellenar elemento</button>
 
 	</div>
 	
@@ -83,13 +81,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 </html>
 
 <script>
-	var allArticles = <?php print_r(json_encode($articulos)); ?>;
+		fillArticles();
+
+	window.onload = function(){
+		//setInterval('fillArticles()',10000);
+	}
+
+	var allArticles ="";
 	var tot = document.getElementById('fTotal');
 	var art = document.getElementById('nuevos');
 	var totF = 0;
 	var articulo = document.getElementById('artVta');
 	var cantidad = document.getElementById('nCant');
-	var i = 0;
+	var i = 1;
 	function addRow(){
 		var listado = {};
 		var precio = 0;
@@ -101,34 +105,50 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		let nombre;
 		if(articulo.value > 0){
 			for(var obj of allArticles){
-				if(obj['eIdProducto'] == articulo.value){
-					precio = obj['ePrecioVenta'];
-					nombre = obj['txtNomProd'];
+				if(obj.eIdProducto == articulo.value){
+					precio = obj.ePrecioVenta;
+					nombre = obj.txtNomProd;
 				}
 			}
 			subt = precio * cant;
 			igv = subt * 0.19;
 			total = subt + igv;
+
+			var row = "<tr>";
+			row += "<td>" + i + "</td>";
+			row += "<td>"+ nombre +"</td>";
+			row += "<td>"+ cant +"</td>";
+			row += "<td>"+ precio +" </td>";
+			row += "<td>"+subt+"</td>";
+			row += "<td>"+igv+"</td>";
+			row += "<td>"+total+"</td>";
+			row += "</tr>";
+			art.innerHTML += row;
+			i++;
+			totF = totF + total;
+			tot.value = totF;
 		}else{
 			alert("Seleccione un artículo!");
 		}
-		var row = "<tr>";
-		row += "<td>" + i + "</td>";
-		row += "<td>"+ nombre +"</td>";
-		row += "<td>"+ cant +"</td>";
-		row += "<td>"+ precio +" </td>";
-		row += "<td>"+subt+"</td>";
-		row += "<td>"+igv+"</td>";
-		row += "<td>"+total+"</td>";
-		row += "</tr>";
-		art.innerHTML += row;
-		i++;
-		totF = totF + total;
-		tot.value = totF;
 
 	}
 	function fillArticles(){
-
+		axios.get("<?php echo site_url('getArticles') ?>",{
+	            responseType: 'json'
+      }).then(function(res) {
+        if (res.status == 200) {
+        	//alert(res.data);
+        	var item = "<option value ='0'>Seleccione una opción </option>";
+        	for(var obj of res.data){
+        		item += "<option value='" + obj.eIdProducto + "'><label>Artículo: </label>" + obj.txtNomProd + "<label>| P/U: </label>" + obj.ePrecioVenta + " </option>";
+        	}
+        	articulo.innerHTML = item;
+        	allArticles = res.data;
+        }
+  	}).catch(function(err) {
+          alert("Error en encontrar la URL");
+          console.log(err);
+    });
 	}
 </script>
 <style type="text/css">
