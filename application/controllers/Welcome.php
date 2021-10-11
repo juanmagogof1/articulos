@@ -10,10 +10,20 @@ class Welcome extends CI_Controller {
 	public function init($dataBase){
 		$this->Queries->init('default');
 	}
+	public function login()
+	{
+		
+		$this->load->view('Template/head');
+		$this->load->view('Login/login');
+		$this->load->view('Template/footer');
+	}
 	public function index()
 	{
 		
-		$this->load->view('welcome_message');
+		$this->load->view('Template/head');
+		$this->load->view('Template/menu');
+		$this->load->view('Articulos/allArticles');
+		$this->load->view('Template/footer');
 	}
 
 	public function getArticles(){
