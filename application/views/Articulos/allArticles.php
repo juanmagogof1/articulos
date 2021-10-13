@@ -26,22 +26,48 @@
 	.btnEdit{
 		border-radius: 5px;
 		border: 1px outset lightgray;
-		background-color: green;
+		background-color: blue;
 		font-size: 1vw;
+		padding: 5px;
+		margin-right: 2px;
+		margin-left: 2px;
 		color: white;
 	}
 	.btnDelete{
 		border-radius: 5px;
 		border: 1px outset lightgray;
+		background-color: orange;
+		font-size: 1vw;
+		padding: 5px;
+		margin-right: 2px;
+		margin-left: 2px;
+		color: white;
+	}
+	.btnActivo{
+		border-radius: 5px;
+		border: 1px outset lightgray;
+		background-color: green;
+		font-size: 1vw;
+		padding: 5px;
+		margin-right: 2px;
+		margin-left: 2px;
+		color: white;
+	}
+	.btnInactivo{
+		border-radius: 5px;
+		border: 1px outset lightgray;
 		background-color: red;
 		font-size: 1vw;
+		padding: 5px;
+		margin-right: 2px;
+		margin-left: 2px;
 		color: white;
 	}
 
 </style>
 <main>
 	<div id="addArticle">
-		<button class="btnAdd">Agregar Artículo</button>
+		<button class="btnAdd" onclick="nwProducto();">Agregar Artículo</button>
 	</div>
 	<div id="tblArticles">
 		<table class="table table-dark table-striped">
@@ -55,38 +81,31 @@
 		      </tr>
 		    </thead>
 		    <tbody id="tblItems">
-		      <tr>
-		        <td>1</td>
-		        <td>Goma</td>
-		        <td>2.80</td>
-		        <td>15</td>
-		        <td>
-		        	<button class="btnEdit">Editar</button>
-		        	<button class="btnDelete">Eliminar</button>
-		    	</td>
-		      </tr>
-		       <tr>
-		        <td>2</td>
-		        <td>Lápiz</td>
-		        <td>.80</td>
-		        <td>10</td>
-		        <td>
-		        	<button class="btnEdit">Editar</button>
-		        	<button class="btnDelete">Eliminar</button>
-		    	</td>
-		      </tr>
+		    	<?php foreach ($articulos as $articulo) {
+		   		echo "<tr>";
+		   	    echo "<td>" .$articulo['eIdProducto']. "</td>";
+		   	    echo "<td>" .$articulo['txtNomProd']. "</td>";
+		   	    echo "<td>" .$articulo['ePrecioVenta']. "</td>";
+		   	    echo "<td>" .$articulo['eStock']."</td>";
+		   	    echo "<td>";
+		   	    echo "<button class='btnEdit'>Editar</button>";
+		   	    echo "<button class='btnDelete'>Eliminar</button>";
+		   	    echo "<button class='";
+		   	    if($articulo['bActivo'] == 1 )
+		   	    	echo "btnActivo";
+		   	    else
+		   	    	echo "btnInactivo";
+	   	    	echo "'>Activo</button>";
+		   		echo "</td>";
+		   	  	echo "</tr>";
+		    	} ?>
+		      
+		      
 		      
 		    </tbody>
 		  </table>
 	</div>
-	<div class="varios">
-		<div class="item"></div>
-		<div class="item"></div>
-		<div class="item"></div>
-		<div class="item2"></div>
-		<div class="item2"></div>
-		<div class="item"></div>
-	</div>
+	
 
 </main>
 <style type="text/css">
@@ -112,7 +131,7 @@
 
 </style>
 <script>
-	function fillArticles(){
-		/*Rellenado de tabla*/
+	function nwProducto(){
+		$('#addProduct').modal('show');
 	}
 </script>

@@ -12,4 +12,12 @@ class Queries extends CI_Model
 		return $articulos->result_array();
 	}
 
+	public function addArticle($data){
+		$query = "INSERT INTO catproductos(txtNomProd, ePrecioVenta, eStock) VALUES ('".$data['name']."',".$data['price'].",".$data['stock'].");";
+		if($this->db->query($query))
+			return true;
+		else
+			return false;
+	}
+
 }
