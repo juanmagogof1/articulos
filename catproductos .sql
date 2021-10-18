@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 07-10-2021 a las 17:32:08
+-- Tiempo de generación: 13-10-2021 a las 21:20:57
 -- Versión del servidor: 10.4.17-MariaDB
 -- Versión de PHP: 8.0.1
 
@@ -32,6 +32,7 @@ CREATE TABLE `catproductos` (
   `txtNomProd` varchar(30) NOT NULL,
   `ePrecioVenta` decimal(8,2) NOT NULL,
   `eStock` int(11) NOT NULL,
+  `bActivo` tinyint(1) NOT NULL DEFAULT 1,
   `fhCreacion` datetime DEFAULT current_timestamp(),
   `fhActualizacion` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -40,11 +41,13 @@ CREATE TABLE `catproductos` (
 -- Volcado de datos para la tabla `catproductos`
 --
 
-INSERT INTO `catproductos` (`eIdProducto`, `txtNomProd`, `ePrecioVenta`, `eStock`, `fhCreacion`, `fhActualizacion`) VALUES
-(1, 'Goma', '2.00', 10, '2021-10-07 08:55:54', '2021-10-07 08:55:54'),
-(2, 'Lapiz', '0.50', 10, '2021-10-07 08:55:54', '2021-10-07 08:55:54'),
-(3, 'Lapicera', '0.80', 10, '2021-10-07 08:55:54', '2021-10-07 08:55:54'),
-(4, 'Cuaderno', '1.50', 10, '2021-10-07 08:55:54', '2021-10-07 08:55:54');
+INSERT INTO `catproductos` (`eIdProducto`, `txtNomProd`, `ePrecioVenta`, `eStock`, `bActivo`, `fhCreacion`, `fhActualizacion`) VALUES
+(1, 'Goma', '2.00', 10, 1, '2021-10-07 08:55:54', '2021-10-07 08:55:54'),
+(2, 'Lapiz', '0.50', 10, 1, '2021-10-07 08:55:54', '2021-10-07 08:55:54'),
+(3, 'Lapicera', '0.80', 10, 1, '2021-10-07 08:55:54', '2021-10-07 08:55:54'),
+(4, 'Cuaderno', '1.50', 10, 1, '2021-10-07 08:55:54', '2021-10-07 08:55:54'),
+(5, 'Cartulina Blanca', '12.30', 10, 1, '2021-10-13 14:16:53', '2021-10-13 14:16:53'),
+(6, 'Tinta Azul', '2.50', 15, 1, '2021-10-13 14:17:22', '2021-10-13 14:17:22');
 
 --
 -- Índices para tablas volcadas
@@ -64,7 +67,7 @@ ALTER TABLE `catproductos`
 -- AUTO_INCREMENT de la tabla `catproductos`
 --
 ALTER TABLE `catproductos`
-  MODIFY `eIdProducto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `eIdProducto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
