@@ -19,7 +19,7 @@ class Welcome extends CI_Controller {
 	}
 	public function index()
 	{
-		$info['articulos'] = $this->Queries->getArticles();
+		$info['articulos'] = $this->Queries->getArticles('C');
 		$this->load->view('Template/head');
 		$this->load->view('Template/menu');
 		$this->load->view('Articulos/allArticles',$info);
@@ -28,8 +28,17 @@ class Welcome extends CI_Controller {
 
 	}
 
+	public function compras()
+	{
+		$this->load->view('Template/head');
+		$this->load->view('Template/menu');
+		$this->load->view('Compras/vistaCompra');
+		$this->load->view('Template/footer');
+
+	}
+
 	public function getArticles(){
-		$allArticles = $this->Queries->getArticles();
+		$allArticles = $this->Queries->getArticles('F');
 		print_r(json_encode($allArticles));
 	}
 
@@ -39,5 +48,24 @@ class Welcome extends CI_Controller {
 		$result = $this->Queries->addArticle($data);
 		
 	}
+
+	public function udtActP(){
+		$data = json_decode(file_get_contents("php://input"), true);
+		$result = $this->Queries->udtActP($data);
+	}
+
+	public function getProduct(){
+		$data = json_decode(file_get_contents("php://input"), true);
+		$result = $this->Queries->getProd($data);
+		print_r(json_encode($result[0]));
+	}
+	
+	public function udpArticle(){
+		$data = json_decode(file_get_contents("php://input"), true);
+		//print_r($data);
+		$result = $this->Queries->udtProd($data);
+		print_r(json_encode($result));
+	}
+
 
 }

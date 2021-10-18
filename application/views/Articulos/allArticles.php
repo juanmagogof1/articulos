@@ -67,7 +67,8 @@
 </style>
 <main>
 	<div id="addArticle">
-		<button class="btnAdd" onclick="nwProducto();">Agregar Artículo</button>
+		<!--<button class="btnAdd" onclick="nwProducto();">Agregar Artículo</button>-->
+		<button class="btnAdd" data-toggle="modal" data-target="#addProduct">Agregar Artículo</button>
 	</div>
 	<div id="tblArticles">
 		<table class="table table-dark table-striped">
@@ -88,14 +89,14 @@
 		   	    echo "<td>" .$articulo['ePrecioVenta']. "</td>";
 		   	    echo "<td>" .$articulo['eStock']."</td>";
 		   	    echo "<td>";
-		   	    echo "<button class='btnEdit'>Editar</button>";
-		   	    echo "<button class='btnDelete'>Eliminar</button>";
+		   	    echo "<button class='btnEdit' onclick='editProduct(".$articulo['eIdProducto']. ")'>Editar</button>";
+		   	    echo "<button class='btnDelete' onclick = 'activate(" .$articulo['eIdProducto']. ",0);'>Eliminar</button>";
 		   	    echo "<button class='";
 		   	    if($articulo['bActivo'] == 1 )
 		   	    	echo "btnActivo";
 		   	    else
 		   	    	echo "btnInactivo";
-	   	    	echo "'>Activo</button>";
+	   	    	echo "' onclick = 'activate(" .$articulo['eIdProducto']. ",1);'>Activo</button>";
 		   		echo "</td>";
 		   	  	echo "</tr>";
 		    	} ?>
@@ -131,7 +132,45 @@
 
 </style>
 <script>
-	function nwProducto(){
+	/*function nwProducto(){
 		$('#addProduct').modal('show');
+	}*/
+	function activate(id,acc){
+		var obj = {};
+		obj.id = id;
+		obj.acc = acc;
+		axios.post("<?php echo site_url('udtActP') ?>", obj
+		).then(function(res){
+		    if (res.status == 200) {
+
+		      window.location = "<?php echo site_url('articulos') ?>";
+		    }
+
+		  }).catch(function(err){
+
+		    alet(err);
+		    console.log(err);
+		  });
+	}
+	function editProduct(id){
+		var obj = {};
+		obj.id = id;
+		axios.post("<?php echo site_url('getProduct') ?>", obj
+		).then(function(res){
+		    if (res.status == 200) {
+		    	var obj = res.data;
+		      	editName.value =obj.txtNomProd;
+		      	editPrice.value=  obj.ePrecioVenta;
+		      	editStock.value = obj.eStock;
+		      	idProd.value = obj.eIdProducto;
+		   		$('#editProduct').modal('show');
+
+		    }
+
+		  }).catch(function(err){
+
+		    alert(err);
+		    console.log(err);
+		  });
 	}
 </script>

@@ -58,4 +58,9 @@ $route['addArticle'] = 'Welcome/addArticle';
 
 $route['login'] = 'Welcome/login';
 $route['articulos'] = 'Welcome/index';
+$route['compras'] = 'Welcome/compras';
+
+$route['udtActP'] = 'Welcome/udtActP';
+$route['getProduct'] = 'Welcome/getProduct';
+$route['udpArticle'] = 'Welcome/udpArticle';
 
