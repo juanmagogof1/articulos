@@ -7,6 +7,22 @@ class Queries extends CI_Model
 	}
 	
 
+	public function login($data){
+		$user = $data['txtUser'];
+		$psw = sha1($data['txtPsw']);
+		$query ="SELECT * FROM relusuario WHERE txtNombreCorto = '".$user."' AND txtPassword = '".$psw."' AND bActivo = 1";
+		$result = $this->db->query($query);
+		if($result->num_rows() > 0){
+			$query2 ="SELECT * FROM vwusers WHERE usr = '".$user . "'";
+			$usuario = $this->db->query($query2);
+			return $usuario->result_array();
+		}else{
+			return false;
+		}
+	}
+
+
+
 	public function getArticles($data){
 		if($data == 'C')$articulos = $this->db->query('SELECT * FROM catproductos');
 		if($data == 'F')$articulos = $this->db->query('SELECT * FROM catproductos WHERE bActivo = 1');

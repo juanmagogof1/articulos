@@ -17,11 +17,49 @@ class Welcome extends CI_Controller {
 		$this->load->view('Login/login');
 		$this->load->view('Template/footer');
 	}
+
+
+	public function log_in(){
+		if(isset($_POST['btnIngresar'])){
+			$result = $this->Queries->login($_POST);
+			$data = [
+				'usuario' => $result[0]['usr'],
+				'nombre' => $result[0]['nombre'],
+				'apellidos' => $result[0]['apellidos'],
+				'RFC' => $result[0]['RFC'],
+				'tipo' => $result[0]['tipo'],
+				'userKind' => $result[0]['eTipo'],
+				'eIdUsr' => $result[0]['eIdUsr'],
+				'eIdPer' => $result[0]['eIdPer']
+			];
+			$this->session->set_userdata($data);
+			if($data['userKind'] == 1){
+				header("Location:".site_url('admin'));
+			}
+			
+			
+		}
+		if(isset($_POST['btnRegistrarme'])){
+			$this->registro();
+		}
+
+
+	}
+
+	public function registro(){
+		echo "Bienvenido a registro";
+	}
+
+
 	public function index()
 	{
 		$info['articulos'] = $this->Queries->getArticles('C');
 		$this->load->view('Template/head');
-		$this->load->view('Template/menu');
+		if($this->session->userdata('userKind') != 0) 
+			$this->load->view('Template/menu2');
+		else
+			$this->load->view('Template/menu');
+		
 		$this->load->view('Articulos/allArticles',$info);
 		$this->load->view('Template/footer');
 		$this->load->view('Articulos/modalArticles',$info);
@@ -31,7 +69,10 @@ class Welcome extends CI_Controller {
 	public function compras()
 	{
 		$this->load->view('Template/head');
-		$this->load->view('Template/menu');
+		if($this->session->userdata('userKind') != 0) 
+			$this->load->view('Template/menu2');
+		else
+			$this->load->view('Template/menu');
 		$this->load->view('Compras/vistaCompra');
 		$this->load->view('Template/footer');
 
@@ -66,6 +107,23 @@ class Welcome extends CI_Controller {
 		$result = $this->Queries->udtProd($data);
 		print_r(json_encode($result));
 	}
+
+
+/*FUNCIONES DE SESIONES*/
+	
+	public function admin(){
+		$this->load->view('Template/head');
+		$this->load->view('Template/menu2');
+		$this->load->view('Admin/adminPpal');
+		$this->load->view('Template/footer');
+
+	}
+
+	public function logout(){
+		$this->session->sess_destroy();
+		$this->index();
+	}
+
 
 
 }

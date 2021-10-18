@@ -53,14 +53,25 @@ $route['default_controller'] = 'welcome';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
+/* Rutas para generar carrito de compras */
 $route['getArticles'] = 'Welcome/getArticles';
 $route['addArticle'] = 'Welcome/addArticle';
-
-$route['login'] = 'Welcome/login';
-$route['articulos'] = 'Welcome/index';
 $route['compras'] = 'Welcome/compras';
-
 $route['udtActP'] = 'Welcome/udtActP';
 $route['getProduct'] = 'Welcome/getProduct';
 $route['udpArticle'] = 'Welcome/udpArticle';
+$route['articulos'] = 'Welcome/index';
+
+/*Rutas para Login*/
+$route['login'] = 'Welcome/login';
+$route['log_in'] = 'Welcome/log_in';
+$route['logout'] = 'Welcome/logout';
+   
+
+/*rutas Administrador*/
+$route['admin'] = 'Welcome/admin';
+
+
+
+
 

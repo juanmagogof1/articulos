@@ -90,7 +90,7 @@
 			</div>
 			<button class="btn btn-outline-success waves-effect" onclick="addRow()">Agregar Artículo</button>
 			<button class="btn btn-outline-danger waves-effect" >Comprar Carrito</button>
-			<button class="btn btn-outline-info waves-effect" onclick="fillArticles();">Rellenar elemento</button>
+			<button class="btn btn-outline-info waves-effect" onclick="verCarrito();">Ver carrito</button>
 
 	
 		
@@ -112,6 +112,14 @@
 	var articulo = document.getElementById('artVta');
 	var cantidad = document.getElementById('nCant');
 	var i = 1;
+
+	var objCarrito = {
+		length: 0,
+		addElem : function addElem(elem){
+			[].push.call(this, elem);
+		}
+	};
+
 	function addRow(){
 		var listado = {};
 		var precio = 0;
@@ -124,14 +132,23 @@
 		if(articulo.value > 0){
 			for(var obj of allArticles){
 				if(obj.eIdProducto == articulo.value){
+					eId = obj.eIdProducto;
 					precio = obj.ePrecioVenta;
 					nombre = obj.txtNomProd;
 				}
 			}
+
+			var obj2 = {};
+			obj2.eIdProd = eId;
+			obj2.cant = cant;
+			
+
 			subt = precio * cant;
 			igv = subt * 0.19;
 			total = subt + igv;
-
+			obj2.subt = subt;
+			obj2.igv = igv;
+			obj2.total = total;
 			var row = "<tr>";
 			row += "<td>" + i + "</td>";
 			row += "<td>"+ nombre +"</td>";
@@ -145,11 +162,17 @@
 			i++;
 			totF = totF + total;
 			tot.value = totF;
+			objCarrito.addElem(obj2);
 		}else{
 			alert("Seleccione un artículo!");
 		}
 
 	}
+
+	function verCarrito(){
+			alert(objCarrito.eIdProd);		
+	}
+
 	function fillArticles(){
 		axios.get("<?php echo site_url('getArticles') ?>",{
 	            responseType: 'json'
