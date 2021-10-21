@@ -113,12 +113,56 @@
 	var cantidad = document.getElementById('nCant');
 	var i = 1;
 
-	var objCarrito = {
-		length: 0,
-		addElem : function addElem(elem){
-			[].push.call(this, elem);
+	
+	class Carrito{
+		constructor(id,precio,nombre,cant,subt,igv,tot,next){
+			this.id = id;
+			this.precio = precio;
+			this.nombre = nombre;
+			this.cant = cant;
+			this.subt = subt;
+			this.igv = igv;
+			this.tot = tot;
+			this.next = next;
 		}
-	};
+	}
+
+	class ListCarrito {
+		constructor(){
+			this.head = null;
+		}
+		prepend(id,precio,nombre,cant,subt,igv,tot){
+			const newItem = new Carrito(id,precio,nombre,cant,subt,igv,tot,this.head);
+			this.head = newItem;
+		}
+		print(){
+	    let currentNode = this.head;
+	    while (currentNode) {
+	    	return currentNode;
+	      alert("Id = " + currentNode.id);
+	      alert("Nombre = " + currentNode.nombre);
+	      alert("Precio = " + currentNode.precio);
+	      alert("Cantidad = " + currentNode.cant);
+	      alert("Subtotal = " + currentNode.subt);
+	      alert("IGV = " + currentNode.igv);
+	      alert("Total = " + currentNode.tot);
+	      currentNode = currentNode.next;
+	  	}
+  	}
+  	deleteHead() {
+  	    if (this.head) {
+  	      if (this.head.next) {
+  	        const secondNode = this.head.next;
+  	        this.head = secondNode;
+  	      } else {
+  	        this.head = null;
+  	      }
+  	    }
+  	  }
+	}
+	carrito = new ListCarrito();
+
+	
 
 	function addRow(){
 		var listado = {};
@@ -138,17 +182,13 @@
 				}
 			}
 
-			var obj2 = {};
-			obj2.eIdProd = eId;
-			obj2.cant = cant;
+			
 			
 
 			subt = precio * cant;
 			igv = subt * 0.19;
 			total = subt + igv;
-			obj2.subt = subt;
-			obj2.igv = igv;
-			obj2.total = total;
+			
 			var row = "<tr>";
 			row += "<td>" + i + "</td>";
 			row += "<td>"+ nombre +"</td>";
@@ -162,16 +202,24 @@
 			i++;
 			totF = totF + total;
 			tot.value = totF;
-			objCarrito.addElem(obj2);
+
+			/*creación del objeto Carrito*/
+
+			
+			carrito.prepend(eId,precio,nombre,cant,subt,igv,total);
+
+
 		}else{
 			alert("Seleccione un artículo!");
 		}
 
 	}
 
-	function verCarrito(){
-			alert(objCarrito.eIdProd);		
-	}
+
+function verCarrito(){
+	
+}
+	
 
 	function fillArticles(){
 		axios.get("<?php echo site_url('getArticles') ?>",{
