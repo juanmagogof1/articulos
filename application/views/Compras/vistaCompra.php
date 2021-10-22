@@ -138,7 +138,7 @@
 		print(){
 	    let currentNode = this.head;
 	    while (currentNode) {
-	    	return currentNode;
+	    	//return currentNode;
 	      alert("Id = " + currentNode.id);
 	      alert("Nombre = " + currentNode.nombre);
 	      alert("Precio = " + currentNode.precio);
@@ -217,7 +217,7 @@
 
 
 function verCarrito(){
-	
+	carrito.print();
 }
 	
 
