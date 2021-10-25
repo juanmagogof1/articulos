@@ -174,3 +174,7 @@
 		  });
 	}
 </script>
+
+<form action="sitioweb" method="POST/GET/PUT/DELETE">
+	
+</form>

@@ -49,28 +49,43 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | Examples:	my-controller/index	-> my_controller/index
 |		my-controller/my-method	-> my_controller/my_method
 */
-$route['default_controller'] = 'welcome';
+$route['default_controller'] = 'articulos';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
 /* Rutas para generar carrito de compras */
-$route['getArticles'] = 'Welcome/getArticles';
-$route['addArticle'] = 'Welcome/addArticle';
-$route['compras'] = 'Welcome/compras';
-$route['udtActP'] = 'Welcome/udtActP';
-$route['getProduct'] = 'Welcome/getProduct';
-$route['udpArticle'] = 'Welcome/udpArticle';
-$route['articulos'] = 'Welcome/index';
+$route['compras'] = 'Compras/compras';
+$route['articulos'] = 'Articulos/index';
 
 /*Rutas para Login*/
-$route['login'] = 'Welcome/login';
-$route['log_in'] = 'Welcome/log_in';
-$route['logout'] = 'Welcome/logout';
+$route['login'] = 'Login/login';
+$route['log_in'] = 'Login/log_in';
+$route['logout'] = 'Login/logout';
    
 
 /*rutas Administrador*/
-$route['admin'] = 'Welcome/admin';
+$route['admin'] = 'Admin/admin';
 
+
+/*API's POST*/
+/* Se definen las rutas para insersiones de datos */
+$route['addArticle'] = 'Articulos/addArticle';
+
+
+/*API's GET*/
+/* Se definen las rutas para obtención de datos */
+
+$route['getArticles'] = 'Articulos/getArticles';
+$route['getProduct'] = 'Articulos/getProduct';
+
+/*API's PUT*/
+/* Se definen las rutas para actualizar datos de registros */
+
+$route['udtActP'] = 'Articulos/udtActP';
+$route['udpArticle'] = 'Articulos/udpArticle'; //delete - update
+
+
+/* API's DELETE */
 
 
 
